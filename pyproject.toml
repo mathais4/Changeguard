@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "changeguard"
+version = "0.1.0"
+description = "Explainable risk analysis for Git changes: evidence, blast radius, test gaps, and a measured evaluation."
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+changeguard = "changeguard.cli:main"
+
+[tool.setuptools]
+packages = ["changeguard"]

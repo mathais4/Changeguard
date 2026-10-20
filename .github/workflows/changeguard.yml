@@ -1,0 +1,25 @@
+name: ChangeGuard
+on: pull_request
+
+permissions:
+  contents: read
+  pull-requests: write   # needed to post the comment (not available on fork PRs)
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # history is the input; shallow clones give no signal
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install .
+      - name: Risk report
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >
+          changeguard report
+          --base origin/${{ github.base_ref }} --head HEAD
+          --github-repo ${{ github.repository }} --pr ${{ github.event.number }}
